@@ -32,7 +32,7 @@ public class Main {
                 "C", "0", "=", "+"
         };
 
-        final String[] operation = {"-1", "-", "-1"};
+        final String[] operation = {"-1", "-", "-1", "≠"};
 
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
@@ -41,10 +41,16 @@ public class Main {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
                     int result = -1;
 
                     String[] basicOperators = {"+", "-", "*", "/"};
                     String[] complexOperators = {"^", "&", "%"};
+
+                    if (operation[3].equals("=")) {
+                        display.setText("");
+                        operation[3] = "≠";
+                    }
 
                     if (Character.isDigit(button.getText().charAt(0))) {
                         display.setText(display.getText() + button.getText());
@@ -77,6 +83,8 @@ public class Main {
                         } else if (operand.equals("/")) {
                             result = firstNum / secondNum;
                         }
+
+                        operation[3] = "=";
 
                         System.out.println(Integer.toString(result));
                         display.setText(Integer.toString(result));
