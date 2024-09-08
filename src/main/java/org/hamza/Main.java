@@ -50,14 +50,13 @@ public class Main {
                         display.setText(display.getText() + button.getText());
                     } else if (button.getText().equals("C")) {
                         display.setText("");
-                    } else if (button.getText().equals("+") && !display.getText().equals("")) {
-                        operation[0] = display.getText();
-                        display.setText("");
-                        operation[1] = "+";
-                    } else if (button.getText().equals("-") && !display.getText().equals("")) {
-                        operation[0] = display.getText();
-                        display.setText("");
-                        operation[1] = "-";
+                    }
+                    for (String operator: basicOperators) {
+                        if (button.getText().equals(operator) && !display.getText().equals("")) {
+                            operation[0] = display.getText();
+                            display.setText("");
+                            operation[1] = operator;
+                        }
                     }
 
                     if (button.getText().equals("=")) {
@@ -65,10 +64,18 @@ public class Main {
                         int firstNum = Integer.parseInt(operation[0]);
                         String operand = operation[1];
 
+
+                        /*for (operator : basicOperators) {
+
+                        }*/
                         if (operand.equals("+")) {
                             result = firstNum + secondNum;
                         } else if (operand.equals("-")) {
                             result = firstNum - secondNum;
+                        } else if (operand.equals("*")) {
+                            result = firstNum * secondNum;
+                        } else if (operand.equals("/")) {
+                            result = firstNum / secondNum;
                         }
 
                         System.out.println(Integer.toString(result));
