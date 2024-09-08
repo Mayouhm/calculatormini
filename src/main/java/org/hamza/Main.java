@@ -32,20 +32,47 @@ public class Main {
                 "C", "0", "=", "+"
         };
 
+        final String[] operation = {"-1", "-", "-1"};
+
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
             buttonsPanel.add(button);
+
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int firstNum;
-                    int secondNum;
-                    int result;
+                    int result = -1;
+
+                    String[] basicOperators = {"+", "-", "*", "/"};
+                    String[] complexOperators = {"^", "&", "%"};
 
                     if (Character.isDigit(button.getText().charAt(0))) {
                         display.setText(display.getText() + button.getText());
                     } else if (button.getText().equals("C")) {
                         display.setText("");
+                    } else if (button.getText().equals("+") && !display.getText().equals("")) {
+                        operation[0] = display.getText();
+                        display.setText("");
+                        operation[1] = "+";
+                    } else if (button.getText().equals("-") && !display.getText().equals("")) {
+                        operation[0] = display.getText();
+                        display.setText("");
+                        operation[1] = "-";
+                    }
+
+                    if (button.getText().equals("=")) {
+                        int secondNum = Integer.parseInt(display.getText());
+                        int firstNum = Integer.parseInt(operation[0]);
+                        String operand = operation[1];
+
+                        if (operand.equals("+")) {
+                            result = firstNum + secondNum;
+                        } else if (operand.equals("-")) {
+                            result = firstNum - secondNum;
+                        }
+
+                        System.out.println(Integer.toString(result));
+                        display.setText(Integer.toString(result));
                     }
                 }
             });
