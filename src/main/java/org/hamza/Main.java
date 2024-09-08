@@ -38,8 +38,14 @@ public class Main {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    int firstNum;
+                    int secondNum;
+                    int result;
+
                     if (Character.isDigit(button.getText().charAt(0))) {
                         display.setText(display.getText() + button.getText());
+                    } else if (button.getText().equals("C")) {
+                        display.setText("");
                     }
                 }
             });
