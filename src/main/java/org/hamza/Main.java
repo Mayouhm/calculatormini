@@ -15,9 +15,12 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
+        Font displayFont = new Font("SansSerif", Font.PLAIN, 20);
+
         JTextField display = new JTextField();
         display.setPreferredSize(new Dimension(300, 100));
         display.setEditable(false);
+        display.setFont(displayFont);
         display.setHorizontalAlignment(JTextField.RIGHT);
         panel.add(display, BorderLayout.NORTH);
 
@@ -29,10 +32,10 @@ public class Main {
                 "7", "8", "9", "/",
                 "4", "5", "6", "*",
                 "1", "2", "3", "-",
-                "C", "0", "=", "+"
+                "C", "0", "=", "+",
         };
 
-        final String[] operation = {"-1", "-", "-1", "≠", "result"};
+        final String[] operation = {"null", "null", "null", "≠", "result"};
 
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
@@ -44,8 +47,7 @@ public class Main {
 
                     double result = -1;
 
-                    String[] basicOperators = {"+", "-", "*", "/"};
-                    String[] complexOperators = {"^", "&", "%"};
+                    String[] operators = {"+", "-", "*", "/", "^", "&", "%"};
 
                     if (operation[3].equals("=")) {
                         display.setText("");
@@ -64,7 +66,7 @@ public class Main {
                     }
 
 
-                    for (String operator: basicOperators) {
+                    for (String operator: operators) {
                         if (button.getText().equals(operator) && !display.getText().isEmpty()) {
                             if (!display.getText().equals("Ans")) {
                                 operation[0] = display.getText();
@@ -74,21 +76,11 @@ public class Main {
                         }
                     }
 
-                    for (String operator: complexOperators) {
-                        if (button.getText().equals(operator) && !display.getText().isEmpty()) {
-                            if (!display.getText().equals("Ans")) {
-                                operation[0] = display.getText();
-                            }
-                            display.setText("");
-                            operation[1] = operator;
-                        }
-                    }
-
-                    if (button.getText().equals("=")) {
+                    if ((button.getText().equals("=")) && !display.getText().isEmpty()) {
                         double secondNum = Double.parseDouble(display.getText());
                         double firstNum = Double.parseDouble(operation[0]);
                         String operand = operation[1];
-                        
+
                         /*for (operator : basicOperators) {
 
                         }*/
@@ -109,6 +101,7 @@ public class Main {
                         }
 
                         operation[3] = "=";
+
                         operation[4] = String.valueOf(result);
 
                         System.out.println(Double.toString(result));
