@@ -101,11 +101,17 @@ public class Main {
                         }
 
                         operation[3] = "=";
+                        String resultStr = Double.toString(result);
+                        if (result == Math.floor(result)) {
+                            operation[4] = String.valueOf(result);
+                            int resultInt = (int) result;
+                            resultStr = Integer.toString(resultInt);
+                        }
 
-                        operation[4] = String.valueOf(result);
+                        operation[4] = resultStr;
 
-                        System.out.println(Double.toString(result));
-                        display.setText(Double.toString(result));
+                        System.out.println(resultStr);
+                        display.setText(resultStr);
 
                     }
                 }
