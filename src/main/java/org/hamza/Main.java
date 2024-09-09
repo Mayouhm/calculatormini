@@ -32,7 +32,7 @@ public class Main {
                 "C", "0", "=", "+"
         };
 
-        final String[] operation = {"-1", "-", "-1", "≠"};
+        final String[] operation = {"-1", "-", "-1", "≠", "result"};
 
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
@@ -42,7 +42,7 @@ public class Main {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    int result = -1;
+                    double result = -1;
 
                     String[] basicOperators = {"+", "-", "*", "/"};
                     String[] complexOperators = {"^", "&", "%"};
@@ -56,21 +56,39 @@ public class Main {
                         display.setText(display.getText() + button.getText());
                     } else if (button.getText().equals("C")) {
                         display.setText("");
+                    } else if (button.getText().equals("Ans")) {
+                        if (!operation[4].equals("result")) {
+                            display.setText("Ans");
+                            operation[0] = operation[4];
+                        }
                     }
+
+
                     for (String operator: basicOperators) {
-                        if (button.getText().equals(operator) && !display.getText().equals("")) {
-                            operation[0] = display.getText();
+                        if (button.getText().equals(operator) && !display.getText().isEmpty()) {
+                            if (!display.getText().equals("Ans")) {
+                                operation[0] = display.getText();
+                            }
+                            display.setText("");
+                            operation[1] = operator;
+                        }
+                    }
+
+                    for (String operator: complexOperators) {
+                        if (button.getText().equals(operator) && !display.getText().isEmpty()) {
+                            if (!display.getText().equals("Ans")) {
+                                operation[0] = display.getText();
+                            }
                             display.setText("");
                             operation[1] = operator;
                         }
                     }
 
                     if (button.getText().equals("=")) {
-                        int secondNum = Integer.parseInt(display.getText());
-                        int firstNum = Integer.parseInt(operation[0]);
+                        double secondNum = Double.parseDouble(display.getText());
+                        double firstNum = Double.parseDouble(operation[0]);
                         String operand = operation[1];
-
-
+                        
                         /*for (operator : basicOperators) {
 
                         }*/
@@ -82,12 +100,20 @@ public class Main {
                             result = firstNum * secondNum;
                         } else if (operand.equals("/")) {
                             result = firstNum / secondNum;
+                        } else if (operand.equals("^")) {
+                            result = Math.pow(firstNum, secondNum);
+                        } else if (operand.equals("&")) {
+                            result = firstNum + secondNum;
+                        } else if (operand.equals("%")) {
+                            result = firstNum % secondNum;
                         }
 
                         operation[3] = "=";
+                        operation[4] = String.valueOf(result);
 
-                        System.out.println(Integer.toString(result));
-                        display.setText(Integer.toString(result));
+                        System.out.println(Double.toString(result));
+                        display.setText(Double.toString(result));
+
                     }
                 }
             });
