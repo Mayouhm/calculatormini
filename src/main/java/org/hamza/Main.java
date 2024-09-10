@@ -58,57 +58,55 @@ public class Main {
 
                     String[] operators = {"+", "-", "*", "/", "^", "&", "%"};
 
-                    if (operation[3].equals("=")) {
+                    if (operation[3].equals("=")) {  //resets =
                         display.setText("");
                         operation[3] = "≠";
                     }
 
-                    if (Character.isDigit(button.getText().charAt(0))) {
+                    if (Character.isDigit(button.getText().charAt(0))) { // for writing numbers
                         display.setText(display.getText() + button.getText());
-                    } else if (button.getText().equals("C")) {
+                    } else if (button.getText().equals("C")) { // clears everything
                         operation[0] = "null";
                         operation[1] = "null";
                         operation[2] = "null";
                         operation[4] = "result";
                         display.setText("");
-                    } else if (button.getText().equals("Ans")) {
-                        if (!operation[4].equals("result")) {
+                    } else if (button.getText().equals("Ans")) { // should fetch answer
+                        if (!operation[4].equals("result")) { // makes sure that there is an answer
                             display.setText("Ans");
-                            if (operation[1].equals("null")) {
-                                operation[0] = operation[4];
-                            } else {
-                                operation[2] = operation[4];
-                            }
-
                         }
                     }
 
 
                     for (String operator: operators) {
-                        if (button.getText().equals(operator) && !display.getText().isEmpty()) {
-                            if (!display.getText().equals("Ans")) {
-                                operation[0] = display.getText();
-                            } else if (!operation[4].equals("null")) {
+                        if (button.getText().equals(operator) && !display.getText().isEmpty()) { // makes sure the display isn't empty bvefore an operator
+                            if (display.getText().equals("Ans")) { // if it says Ans in display it uses previous result
                                 operation[0] = operation[4];
-                                operation[1] = operator;
+                            } else {
+                                operation[0] = display.getText();
                             }
                             display.setText("");
                             operation[1] = operator;
                         }
                     }
 
-                    if ((button.getText().equals("=")) && !display.getText().isEmpty()) {
+                    if ((button.getText().equals("=")) && !display.getText().isEmpty()) { //makes sure = works only when display has something
                         if (operation[0].equals("null")) {
                             result = Double.parseDouble(display.getText());
                         } else {
-                            double secondNum = Double.parseDouble(display.getText());
+                            double secondNum;
+                            if (display.getText().equals("Ans")) { // if it says Ans in display it uses previous result
+                                secondNum = Double.parseDouble(operation[4]);
+                            } else {
+                                secondNum = Double.parseDouble(display.getText());
+                            }
                             double firstNum = Double.parseDouble(operation[0]);
                             String operand = operation[1];
 
                         /*for (operator : basicOperators) {
 
                         }*/
-                            if (operand.equals("+")) {
+                            if (operand.equals("+")) { // does appropriate calculation for every operator
                                 result = firstNum + secondNum;
                             } else if (operand.equals("-")) {
                                 result = firstNum - secondNum;
