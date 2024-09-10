@@ -57,11 +57,20 @@ public class Main {
                     if (Character.isDigit(button.getText().charAt(0))) {
                         display.setText(display.getText() + button.getText());
                     } else if (button.getText().equals("C")) {
+                        operation[0] = "null";
+                        operation[1] = "null";
+                        operation[2] = "null";
+                        operation[4] = "result";
                         display.setText("");
                     } else if (button.getText().equals("Ans")) {
                         if (!operation[4].equals("result")) {
                             display.setText("Ans");
-                            operation[0] = operation[4];
+                            if (operation[1].equals("null")) {
+                                operation[0] = operation[4];
+                            } else {
+                                operation[2] = operation[4];
+                            }
+
                         }
                     }
 
@@ -70,6 +79,9 @@ public class Main {
                         if (button.getText().equals(operator) && !display.getText().isEmpty()) {
                             if (!display.getText().equals("Ans")) {
                                 operation[0] = display.getText();
+                            } else if (!operation[4].equals("null")) {
+                                operation[0] = operation[4];
+                                operation[1] = operator;
                             }
                             display.setText("");
                             operation[1] = operator;
@@ -77,27 +89,31 @@ public class Main {
                     }
 
                     if ((button.getText().equals("=")) && !display.getText().isEmpty()) {
-                        double secondNum = Double.parseDouble(display.getText());
-                        double firstNum = Double.parseDouble(operation[0]);
-                        String operand = operation[1];
+                        if (operation[0].equals("null")) {
+                            result = Double.parseDouble(display.getText());
+                        } else {
+                            double secondNum = Double.parseDouble(display.getText());
+                            double firstNum = Double.parseDouble(operation[0]);
+                            String operand = operation[1];
 
                         /*for (operator : basicOperators) {
 
                         }*/
-                        if (operand.equals("+")) {
-                            result = firstNum + secondNum;
-                        } else if (operand.equals("-")) {
-                            result = firstNum - secondNum;
-                        } else if (operand.equals("*")) {
-                            result = firstNum * secondNum;
-                        } else if (operand.equals("/")) {
-                            result = firstNum / secondNum;
-                        } else if (operand.equals("^")) {
-                            result = Math.pow(firstNum, secondNum);
-                        } else if (operand.equals("&")) {
-                            result = firstNum + secondNum;
-                        } else if (operand.equals("%")) {
-                            result = firstNum % secondNum;
+                            if (operand.equals("+")) {
+                                result = firstNum + secondNum;
+                            } else if (operand.equals("-")) {
+                                result = firstNum - secondNum;
+                            } else if (operand.equals("*")) {
+                                result = firstNum * secondNum;
+                            } else if (operand.equals("/")) {
+                                result = firstNum / secondNum;
+                            } else if (operand.equals("^")) {
+                                result = Math.pow(firstNum, secondNum);
+                            } else if (operand.equals("&")) {
+                                result = firstNum + secondNum;
+                            } else if (operand.equals("%")) {
+                                result = firstNum % secondNum;
+                            }
                         }
 
                         operation[3] = "=";
@@ -107,8 +123,8 @@ public class Main {
                             int resultInt = (int) result;
                             resultStr = Integer.toString(resultInt);
                         }
-
-                        operation[4] = resultStr;
+                        operation[0] = resultStr;
+                        operation[2] = "null";
 
                         System.out.println(resultStr);
                         display.setText(resultStr);
