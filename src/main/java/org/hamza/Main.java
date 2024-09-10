@@ -41,6 +41,15 @@ public class Main {
             JButton button = new JButton(label);
             buttonsPanel.add(button);
 
+            button.setFocusPainted(false);
+            button.setOpaque(true);
+            if (Character.isDigit(button.getText().charAt(0))) {
+                button.setBackground(new Color(239, 248, 255));
+            } else {
+                button.setBackground(new Color(170, 218, 255));
+            }
+            button.setForeground(Color.BLACK);
+
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -124,7 +133,7 @@ public class Main {
                             resultStr = Integer.toString(resultInt);
                         }
                         operation[0] = resultStr;
-                        operation[2] = "null";
+                        operation[1] = "null";
 
                         System.out.println(resultStr);
                         display.setText(resultStr);
